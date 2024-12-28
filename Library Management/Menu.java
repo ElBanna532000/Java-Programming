@@ -6,8 +6,44 @@ public class Menu {
     Library l = new Library();
     Scanner input = new Scanner(System.in);
 
+    public void displayMainMenu() {
+        int choice = -1;
+        while (choice != 0) {
+            System.out.println();
+            System.out.println("========== Welcome to Library Management System ==========");
+            System.out.println("================= Displaying Main Menu =================");
+            System.out.println("1: Client Section");
+            System.out.println("2: Item Section");
+            System.out.println("3: Borrow/Return Section");
+            System.out.println("Exit: Press 0");
+            System.out.print("Enter your choice: ");
+            try {
+                choice = input.nextInt();
+                input.nextLine(); // Clear the buffer
+                switch (choice) {
+                    case 1:
+                        displayClientMenu();
+                        break;
+                    case 2:
+                        displayItemMenu();
+                        break;
+                    case 3:
+                        displayBorrowReturnMenu();
+                        break;
+                    case 0:
+                        System.out.println("Exiting...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input, please enter a number.");
+                input.nextLine(); // Clear the invalid input
+            }
+        }
+    }
 
-    public void displayMenu(){
+    /*public void displayMainMenu(){
         //Library l = new Library();
         System.out.println();
         System.out.println("========== Welcome to Library Management System ==========");
@@ -21,18 +57,143 @@ public class Menu {
         System.out.println("7: Delete a Client");
         System.out.println("8: Delete an Item");
         System.out.println("9: Rent an Item");
-        System.out.println("10: List Borrowed Items");
-        System.out.println("11: Return an Item");
+        System.out.println("10: Return an Item");
+        System.out.println("11: List Borrowed Items");
         System.out.println("12: Update a Client");
         System.out.println("13: Update an Item");
         System.out.println("Exit: Press 0");
+    }*/
+
+    public void displayClientMenu() {
+        int choice = -1;
+        while (choice != 0) {
+            System.out.println();
+            System.out.println("========== Client Section ==========");
+            System.out.println("1: Add a Client");
+            System.out.println("2: Search for a Client");
+            System.out.println("3: Display All Clients");
+            System.out.println("4: Delete a Client");
+            System.out.println("5: Update a Client");
+            System.out.println("Exit: Press 0");
+            System.out.print("Enter your choice: ");
+            try {
+                choice = input.nextInt();
+                input.nextLine(); // Clear the buffer
+                switch (choice) {
+                    case 1:
+                        addClient();
+                        break;
+                    case 2:
+                        displayAllClients();
+                        break;
+                    case 3:
+                        searchClient();
+                        break;
+                    case 4:
+                        deleteClient();
+                        break;
+                    case 5:
+                        updateClient();
+                        break;
+                    case 0:
+                        System.out.println("Returning to main menu...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input, please enter a number.");
+                input.nextLine(); // Clear the invalid input
+            }
+        }
     }
-    
+
+    public void displayItemMenu() {
+        int choice = -1;
+        while (choice != 0) {
+            System.out.println();
+            System.out.println("========== Item Section ==========");
+            System.out.println("1: Add an Item");
+            System.out.println("2: Display All Items");
+            System.out.println("3: Search for an Item");
+            System.out.println("4: Delete an Item");
+            System.out.println("5: Update an Item");
+            System.out.println("Exit: Press 0");
+            System.out.print("Enter your choice: ");
+            try {
+                choice = input.nextInt();
+                input.nextLine(); // Clear the buffer
+                switch (choice) {
+                    case 1:
+                        addItem();
+                        break;
+                    case 2:
+                        displayAllItems();
+                        break;
+                    case 3:
+                        searchItem();
+                        break;
+                    case 4:
+                        deleteItem();
+                        break;
+                    case 5:
+                        updateItem();
+                        break;
+                    case 0:
+                        System.out.println("Returning to main menu...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input, please enter a number.");
+                input.nextLine(); // Clear the invalid input
+            }
+        }
+    }
+
+    public void displayBorrowReturnMenu() {
+        int choice = -1;
+        while (choice != 0) {
+            System.out.println();
+            System.out.println("========== Borrow/Return Section ==========");
+            System.out.println("1: Rent an Item");
+            System.out.println("2: Return an Item");
+            System.out.println("3: List Borrowed Items");
+            System.out.println("Exit: Press 0");
+            System.out.print("Enter your choice: ");
+            try {
+                choice = input.nextInt();
+                input.nextLine(); // Clear the buffer
+                switch (choice) {
+                    case 1:
+                        rentItem();
+                        break;
+                    case 2:
+                        returnItem();
+                        break;
+                    case 3:
+                        displayBorrowedItem();
+                        break;
+                    case 0:
+                        System.out.println("Returning to main menu...");
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input, please enter a number.");
+                input.nextLine(); // Clear the invalid input
+            }
+        }
+    }
+
+
+
+    // Add a Client Method for Menu
     public void addClient(){
         System.out.println("==== Add a Client ====");
-        Client c = new Client();
-        //Scanner input = new Scanner(System.in);
-        
+        Client c = new Client();        
         int id = 0;
         String name = "";
         String email = "";
@@ -84,8 +245,6 @@ public class Menu {
         l.addClient(id, name, email, c);
         System.out.println("Client Added Successfully!");
     }
-    
-
 
     public void addItem(){
         
@@ -101,14 +260,17 @@ public class Menu {
 
         while(flag2==1){
             System.out.println("==== Add an Item ====");
-            System.out.println("Press 1 to add a Book, Press 2 to add a Magazine");
+            System.out.println("Press 1 to add a Book, Press 2 to add a Magazine, Press 0 to Exit");
             
             //Scanner input = new Scanner(System.in);
-            int child = input.nextInt();
+            String child = input.nextLine();
             //input.nextLine();
 
             switch(child){
-                case 1:
+                case "0":
+                    flag2=0;
+                    break;
+                case "1":
                     Book b = new Book();
                     while(flag){
                         try{
@@ -127,7 +289,6 @@ public class Menu {
                             System.out.println(e.getMessage());
                             input.nextLine();
                         }
-                        
                     }
                     flag=true;
                     while(flag){
@@ -157,11 +318,11 @@ public class Menu {
                         }
                     }
                     flag = true;
-
                     while (flag) {
                         try{
                             System.out.println("Enter Book Number of Pages: ");
                             noOfPages = input.nextInt();
+                            input.nextLine();
                             if (noOfPages<=0) {
                                 throw new Exception("Invalid Input, Please Enter a Valid One!");
                             }
@@ -176,7 +337,8 @@ public class Menu {
                     l.addBook(name, id, author, noOfPages, b);
                     System.out.println("Book Added Successfully!");
                     break;
-                case 2:
+
+                case "2":
                     Magazine m = new Magazine();
 
                     while(flag){
@@ -250,8 +412,6 @@ public class Menu {
                     break;
                 default:
                     System.out.println("Invalid Choice, Please Try Again!");
-                    System.out.println("Press 1 to Continue, 0 to Exit");
-                    flag2 = input.nextInt();
                     break;
             }
 
@@ -259,24 +419,36 @@ public class Menu {
     }
     void displayAllClients(){
         System.out.println("==== Displaying All Clients ====");
-        l.displayAllClients();
+        try {
+            l.displayAllClients();
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     void displayAllItems(){
         System.out.println("==== Displaying All Items ====");
-        l.displayAllItems();
+        try {
+            l.displayAllItems();
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     void searchClient(){
         System.out.println("==== Search for a Client ====");
         //Scanner input = new Scanner(System.in);
         System.out.println("Enter Client ID: ");
-        int id = input.nextInt();
         try {
+            int id = input.nextInt();
+
             Client c = l.getClient(id);
             System.out.println("Client Found!");
             c.getClientDetails();
-        } catch (ItemNotFoundException e) {
+        }catch(InputMismatchException e){
+            System.out.println("Invalid Input, Please Enter a Valid One!");
+            input.nextLine();
+        }catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -285,12 +457,15 @@ public class Menu {
         System.out.println("==== Search for an Item ====");
         //Scanner input = new Scanner(System.in);
         System.out.println("Enter Item ID: ");
-        int id = input.nextInt();
         try {
+            int id = input.nextInt();
             LibraryItem item = l.getItem(id);
             System.out.println("Item Found!");
             item.getItemDetails();
-        } catch (ItemNotFoundException e) {
+        }catch(InputMismatchException e){
+            System.out.println("Invalid Input, Please Enter a Valid One!");
+            input.nextLine();
+        }catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -308,7 +483,7 @@ public class Menu {
             String email = input.next();
             c.setEmail(email);
             System.out.println("Client Updated Successfully!");
-        } catch (ItemNotFoundException e) {
+        } catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -318,12 +493,37 @@ public class Menu {
         //Scanner input = new Scanner(System.in);
         System.out.println("Enter Item ID: ");
         int id = input.nextInt();
+        input.nextLine();
         try {
             LibraryItem item = l.getItem(id);
-            System.out.println("Enter New Title: ");
-            String title = input.next();
-            l.updateItem(id, title);
-            System.out.println("Item Updated Successfully!");
+            if(item instanceof Book){
+                System.out.println("Enter New Title: ");
+                String title = input.nextLine();
+
+                System.out.println("Enter New Author Name: ");
+                String name = input.nextLine();
+                
+                System.out.println("Enter New Number of Pages: ");
+                int noOfPages = input.nextInt();
+
+                l.updateItem(id, title, noOfPages, name);
+                System.out.println("Item Updated Successfully!");
+                return;
+            }else if(item instanceof Magazine){
+                System.out.println("Enter New Title: ");
+                String title = input.nextLine();
+
+                System.out.println("Enter New Issue Number: ");
+                int issueNumber = input.nextInt();
+                input.nextLine();
+
+                System.out.println("Enter New Publication Date: ");
+                String publcationDate = input.nextLine();
+
+                l.updateItem(id, title, issueNumber, publcationDate);
+                System.out.println("Item Updated Successfully!");
+                return;
+            }
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -340,7 +540,9 @@ public class Menu {
             //System.out.println("Before Rent Item Method");
             l.borrowItem(id, itemID);
         } catch (ItemNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Invalid Client ID or Item ID, Please Try Again!");
+        }catch (ClientNotFoundException e) {
+            System.out.println("Invalid Client ID or Item ID, Please Try Again!");
         }
     }
 
@@ -351,7 +553,7 @@ public class Menu {
         int id = input.nextInt();
         try {
             l.showBorrowedItems(id);
-        } catch (ItemNotFoundException e) {
+        } catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -363,7 +565,6 @@ public class Menu {
         int id = input.nextInt();
         try {
             l.deleteClient(id);
-            System.out.println("Client Deleted Successfully!");
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -376,7 +577,6 @@ public class Menu {
         int id = input.nextInt();
         try {
             l.deleteItem(id);
-            System.out.println("Item Deleted Successfully!");
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -392,6 +592,8 @@ public class Menu {
         try {
             l.returnItem(id, itemID);
         } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
+        }catch (ClientNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }

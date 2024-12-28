@@ -3,62 +3,61 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Menu menu = new Menu();
-        int flag=1;
-        int choice;
+        menu.displayMainMenu();
+        /*int flag=1;
+        String choice;
         while(flag==1){
             menu.displayMenu();
             System.out.print("Take an Action: ");
             Scanner input = new Scanner(System.in);
-            choice = input.nextInt();
+            choice = input.nextLine();
             switch (choice){
-                case 1:
+                case "1":
                     menu.addClient();
                     break;
-                case 2:
+                case "2":
                     menu.addItem();
                     break;
-                case 3:
+                case "3":
                     menu.displayAllClients();
                     break;
-                case 4:
+                case "4":
                     menu.displayAllItems();
                     break;
-                case 5:
+                case "5":
                     menu.searchClient();
                     break;
-                case 6:
+                case "6":
                     menu.searchItem();
                     break;
-                case 7:
+                case "7":
                     menu.deleteClient();
                     break;
-                case 8: 
+                case "8": 
                     menu.deleteItem();
                     break;
-                case 9:
+                case "9":
                     menu.rentItem();
                     break;
-                case 10:
+                case "10":
                     menu.returnItem();
                     break;
-                case 11:
+                case "11":
                     menu.displayBorrowedItem();
                     break;
-                case 12:
+                case "12":
                     menu.updateClient();
                     break;
-                case 13:
+                case "13":
                     menu.updateItem();
                     break;
-                case 0:
+                case "0":
                     flag=0;
                     break;
                 default:
-                    System.out.println("Invalid Choice, Please Try Again!");
-                    System.out.println("Press 1 to Continue, 0 to Exit");
-                    flag = input.nextInt();
+                    System.out.println("Invalid Choice");
                     break;
             }
-        }
+        }/* */
     }
 }

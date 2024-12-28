@@ -20,7 +20,6 @@ public class Library{
         b.setID(id);
         b.setAuthor(author);
         b.setNoOfPages(pages);
-
         //System.out.println("after Add");
         addItem(b);
     }
@@ -55,7 +54,7 @@ public class Library{
         return libraryItem;
     } // replace void 
 
-    public Client getClient(int id) throws ItemNotFoundException{
+    public Client getClient(int id) throws ClientNotFoundException{
         /*for (Client client : clients) {
             if(client.getID()==id){
                 return client;
@@ -65,14 +64,13 @@ public class Library{
         if(client!=null){
             return client;
         }
-        throw new ItemNotFoundException("Client Not Found, please try different ID!");
+        throw new ClientNotFoundException("Client Not Found, please try different ID!");
         
     }
 
-    public void displayAllItems(){
-        if(items==null){
-            System.out.println("No Items in the Library");
-            return;
+    public void displayAllItems() throws EmptyListException{
+        if(items.isEmpty() || items==null){
+            throw new EmptyListException("No Items in the Library");
         }
         //System.out.println("rererererere");
         for (LibraryItem libraryItem : items) {
@@ -80,10 +78,9 @@ public class Library{
         }
     }
 
-    public void displayAllClients(){
-        if(clients==null){
-            System.out.println("No Clients in the Library");
-            return;
+    public void displayAllClients() throws EmptyListException{
+        if(clients.isEmpty() || clients==null){
+            throw new EmptyListException("No Clients in the Library");
         }
         //System.out.println("rerererererreerer");
         for (Client c : clients){
@@ -91,11 +88,31 @@ public class Library{
             c.getClientDetails();    
         }
     }
-    public void updateItem(int id, String title) throws ItemNotFoundException{
+    /*public void updateItem(int id, String title) throws ItemNotFoundException{
         LibraryItem item = getItem(id);
         item.title=title;
+    }*/
+    /*public void updateItem(int id, String title, String date) throws ItemNotFoundException{
+        Magazine m = (Magazine)getItem(id);
+        m.setTitle(title);
+        m.setPublcationDate(date);
+    }*/
+
+    public void updateItem(int id, String title, int num, String str) throws ItemNotFoundException{
+        LibraryItem item = getItem(id);
+        if(item instanceof Magazine){
+            Magazine m = (Magazine)item;
+            m.setTitle(title);
+            m.setIssueNumber(num);
+            m.setPublcationDate(str);
+        }else if(item instanceof Book){
+            Book b = (Book)item;
+            b.setTitle(title);
+            b.setNoOfPages(num);
+            b.setAuthor(str);
+        }
     }
-    public void updateClient(int id, String name, String email) throws ItemNotFoundException{
+    public void updateClient(int id, String name, String email) throws ClientNotFoundException{
         Client c = getClient(id);
         c.setName(name);
         c.setEmail(email);
@@ -122,7 +139,13 @@ public class Library{
     public void deleteItem(int id) throws ItemNotFoundException{
         for (LibraryItem libraryItem : items) {
             if(libraryItem.id==id){
+                if(libraryItem.isBorrowed){
+                    System.out.println("Item is borrowed, return it first!");
+                    return;
+                }
                 items.remove(libraryItem);
+                System.out.println("Item Deleted Successfully!");
+
                 return;
             }
         }
@@ -133,14 +156,20 @@ public class Library{
     public void deleteClient(int id) throws ItemNotFoundException{
         for (Client client : clients) {
             if(client.getID()==id){
+                if(client.getBorrowedItems().size()>0){
+                    System.out.println("Client has borrowed items, return them first!");
+                    return;
+                }
                 clients.remove(client);
+                System.out.println("Client Deleted Successfully!");
+
                 return;
             }
         }
         throw new ItemNotFoundException("Client Not Found, double check it!");
     }
 
-    public void borrowItem(int clientID, int itemID) throws ItemNotFoundException{
+    public void borrowItem(int clientID, int itemID) throws ClientNotFoundException, ItemNotFoundException{
         System.out.println("Borrow Item in LIBRARY");
         Client c = getClient(clientID);
         LibraryItem item = getItem(itemID);
@@ -153,7 +182,7 @@ public class Library{
         }
     }
 
-    public void showBorrowedItems(int clientID) throws ItemNotFoundException{
+    public void showBorrowedItems(int clientID) throws ClientNotFoundException{
         Client c = getClient(clientID);
         System.out.println("Borrowed Items: ");
         for (LibraryItem libraryItem : c.getBorrowedItems()) {
@@ -161,7 +190,7 @@ public class Library{
         }
     }
 
-    public void returnItem(int clientID, int itemID) throws ItemNotFoundException{
+    public void returnItem(int clientID, int itemID) throws ClientNotFoundException, ItemNotFoundException{
         Client c = getClient(clientID);
         LibraryItem item = getItem(itemID);
         if(c.getBorrowedItems().contains(item)){
